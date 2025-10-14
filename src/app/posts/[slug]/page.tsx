@@ -37,8 +37,13 @@ async function getPostData(slug: string): Promise<Post> {
   };
 }
 
-export default async function Post({ params }: { params: { slug: string } }) {
-  const postData = await getPostData(params.slug);
+type Props = {
+  params: Promise<{ slug: string }>;
+};
+
+export default async function Post({ params }: Props) {
+  const { slug } = await params;
+  const postData = await getPostData(slug);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
