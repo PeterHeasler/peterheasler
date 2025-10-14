@@ -28,8 +28,11 @@ export default function Home() {
         <ul>
           {posts.map((post) => (
             <li key={post.slug}>
-              <Link href={`/posts/${post.slug}`}>
-                <p>{post.title}</p>
+              <Link
+                href={`/posts/${post.slug}`}
+                className="text-lg text-blue-500 hover:underline"
+              >
+                {post.title}
               </Link>
             </li>
           ))}
