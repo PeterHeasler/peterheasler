@@ -3,6 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
+import Link from 'next/link';
 
 type Post = {
   title: string;
@@ -49,6 +50,7 @@ export default async function Post({ params }: Props) {
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
         <article>
+          <Link href="/" className="text-blue-500 hover:underline">&larr; Back to Home</Link>
           <h1 className="text-4xl font-bold">{postData.title}</h1>
           <div className="text-gray-500">{postData.date}</div>
           <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
