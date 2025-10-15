@@ -3,6 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
+import gfm from 'remark-gfm';
 import Link from 'next/link';
 
 type Project = {
@@ -27,6 +28,7 @@ async function getProjectData(slug: string): Promise<Project> {
   const matterResult = matter(fileContents);
 
   const processedContent = await remark()
+    .use(gfm)
     .use(html)
     .process(matterResult.content);
   const contentHtml = processedContent.toString();
@@ -53,7 +55,7 @@ export default async function Project({ params }: Props) {
           <Link href="/" className="text-blue-500 hover:underline">&larr; Back to Home</Link>
           <h1 className="text-4xl font-bold">{projectData.title}</h1>
           <div className="text-gray-500">{projectData.date}</div>
-          <div dangerouslySetInnerHTML={{ __html: projectData.contentHtml }} />
+          <div className="prose" dangerouslySetInnerHTML={{ __html: projectData.contentHtml }} />
         </article>
       </div>
     </main>
