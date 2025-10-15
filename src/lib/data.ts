@@ -21,6 +21,7 @@ function getFrontMatter(directoryPath: string): Post[] {
     return {
       slug: fileName.replace(/\.mdx?$/, ''), // Handles both .md and .mdx
       title: data.title,
+      date: data.date,
       // You can add more front matter fields here (e.g., date, excerpt)
     };
   });

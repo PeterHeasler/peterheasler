@@ -1,56 +1,53 @@
 import Link from 'next/link';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
 type PostCardProps = {
+  route: string;
   slug: string;
   title: string;
   // Optional: Add a brief excerpt or date to make the card look more like a "Post"
   date?: string; 
 };
 
-export default function PostCard({ slug, title, date }: PostCardProps) {
+export default function PostCard({ route, slug, title, date }: PostCardProps) {
+  
+  // The 'slug' prop is now used by the Next.js <Link> component
+  const hrefDestination = `${route}/${slug}`; 
+
   return (
-    <Link href={`/posts/${slug}`} className="block group">
-      <div className="
-        p-6 
-        rounded-xl 
-        border 
-        shadow-lg 
+    // 1. The <Link> component is now the element that handles the click/navigation.
+    // Use the 'group' class here for unified hover effects across the card.
+    <Link href={hrefDestination} className="block group text-current no-underline"> 
+      
+      {/* 2. The shadcn/ui Card replaces the outer <div> and provides structure */}
+      <Card className="
+        h-full 
         transition-all duration-300 ease-in-out 
-        
-        /* Light Mode Styling (Default) */
-        bg-white 
-        border-gray-200 
-        hover:border-indigo-400 
-        hover:shadow-xl
-        
-        /* Dark Mode Styling (Optimized) */
-        dark:bg-gray-800 
-        dark:border-gray-700 
-        dark:shadow-none 
-        dark:hover:border-indigo-500 
+        hover:border-primary/50 
         dark:hover:bg-gray-700
       ">
-        <h5 className="
-          mb-1 
-          text-xl font-semibold 
-          tracking-tight 
-          
-          /* Text Hover Effect (Group Class allows Link to control h5) */
-          text-gray-900 dark:text-gray-100 
-          group-hover:text-indigo-600 dark:group-hover:text-indigo-400
-          transition duration-300
-        ">
-          {title}
-        </h5>
         
-        {/* Optional: Added date/meta for a 'post' feel */}
+        <CardHeader className="pb-2">
+          {/* 3. The title goes into the CardTitle element */}
+          <CardTitle className="
+            text-xl font-semibold 
+            group-hover:text-primary 
+            transition duration-300
+          ">
+            {title}
+          </CardTitle>
+        </CardHeader>
+        
+        {/* Optional: Use CardContent for meta info */}
         {date && (
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-            Published on {date}
-          </p>
+          <CardContent>
+             <p className="text-sm text-muted-foreground">
+                Published on {date}
+             </p>
+          </CardContent>
         )}
-
-      </div>
+        
+      </Card>
     </Link>
   );
 }
