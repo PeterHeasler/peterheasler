@@ -1,78 +1,36 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import Link from 'next/link';
+import PostCard from '@/components/PostCard';
+import ProjectCard from '@/components/ProjectCard';
+// 1. Import the new utility functions
+import { getAllPosts, getAllProjects, Post } from '@/lib/data'; 
 
-type Post = {
-  slug: string;
-  title: string;
-};
 
-type Project = {
-  slug: string;
-  title: string;
-};
-
-export default function Home() {
-  // Posts
-  const postsDirectory = path.join(process.cwd(), 'src/posts');
-  const postFileNames = fs.readdirSync(postsDirectory);
-  const posts: Post[] = postFileNames.map((fileName) => {
-    const filePath = path.join(postsDirectory, fileName);
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    const { data } = matter(fileContents);
-    return {
-      slug: fileName.replace(/\.md$/, ''),
-      title: data.title,
-    };
-  });
-
-  // Projects
-  const projectsDirectory = path.join(process.cwd(), 'src/projects');
-  const projectFileNames = fs.readdirSync(projectsDirectory);
-  const projects: Project[] = projectFileNames.map((fileName) => {
-    const filePath = path.join(projectsDirectory, fileName);
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    const { data } = matter(fileContents);
-    return {
-      slug: fileName.replace(/\.md$/, ''),
-      title: data.title,
-    };
-  });
+// 2. Make the page component an async Server Component
+export default async function Home() {
+  
+  // 3. Call the data fetching functions (these run on the server)
+  const posts: Post[] = getAllPosts();
+  const projects: Post[] = getAllProjects();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <div>
-          <h1 className="text-4xl font-bold">Peter Heasler&apos;s Blog</h1>
-          <ul>
-            {posts.map((post) => (
-              <li key={post.slug}>
-                <Link
-                  href={`/posts/${post.slug}`}
-                  className="text-lg text-blue-500 hover:underline"
-                >
-                  {post.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-
-          <h2 className="text-3xl font-bold mt-12">Projects</h2>
-          <ul>
-            {projects.map((project) => (
-              <li key={project.slug}>
-                <Link
-                  href={`/projects/${project.slug}`}
-                  className="text-lg text-blue-500 hover:underline"
-                >
-                  {project.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
+    <div className="space-y-12">
+      
+      <section id="posts">
+        <h2 className="text-3xl font-bold mb-6">Posts</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {posts.map((post) => (
+            <PostCard key={post.slug} slug={post.slug} title={post.title} />
+          ))}
         </div>
-      </div>
-    </main>
+      </section>
+
+      <section id="projects">
+        <h2 className="text-3xl font-bold mb-6">Projects</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {projects.map((project) => (
+            <ProjectCard key={project.slug} slug={project.slug} title={project.title} />
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }
