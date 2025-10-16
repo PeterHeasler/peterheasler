@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import MarkdownIt from 'markdown-it';
+import ProseThemeWrapper from '@/components/ProseThemeWrapper';
 
 type Content = {
   title: string;
@@ -53,7 +54,9 @@ export default async function ContentPage({ params }: Props) {
         <article>
           <h1 className="text-4xl font-bold">{contentData.title}</h1>
           <div className="text-gray-500">{contentData.date}</div>
-          <div className="prose dark:prose-invert" dangerouslySetInnerHTML={{ __html: contentData.contentHtml }} />
+          <ProseThemeWrapper>
+            <div dangerouslySetInnerHTML={{ __html: contentData.contentHtml }} />
+          </ProseThemeWrapper>
         </article>
       </div>
     </main>
