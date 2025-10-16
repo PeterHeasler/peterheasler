@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 export function ThemeSwitcher() {
-  const { setTheme } = useTheme()
+  const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = React.useState(false)
 
   React.useEffect(() => {
@@ -26,13 +26,16 @@ export function ThemeSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
-          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+        <Button variant="themeSwitcher" size="icon">
+          {theme === "light" ? (
+            <Sun className="h-[1.2rem] w-[1.2rem]" />
+          ) : (
+            <Moon className="h-[1.2rem] w-[1.2rem]" />
+          )}
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" className="dropdown-background">
         <DropdownMenuItem onClick={() => setTheme("light")}>
           Light
         </DropdownMenuItem>

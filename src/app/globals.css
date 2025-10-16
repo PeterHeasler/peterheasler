@@ -49,4 +49,8 @@
   body {
     @reference bg-background text-foreground;
   }
+
+  .dropdown-background {
+    background-color: hsl(var(--popover));
+  }
 }

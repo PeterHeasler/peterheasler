@@ -20,19 +20,21 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
-      <body className={`min-h-screen flex flex-col ${inter.className} border-border`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-        >
-          <Header />
-          <main className="flex-grow">
-            {children}
-          </main>
-          <Footer />
-        </ThemeProvider>
-      </body>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+      >
+        <body className={`${inter.className}`}>
+          <div className="min-h-screen flex flex-col border-border">
+            <Header />
+            <main className="flex-grow p-24">
+              {children}
+            </main>
+            <Footer />
+          </div>
+        </body>
+      </ThemeProvider>
     </html>
   );
 }
