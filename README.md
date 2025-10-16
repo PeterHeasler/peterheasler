@@ -1,5 +1,6 @@
 ## Hi there 👋
 
+Check out my blog here: [https://peterheasler.github.io/peterheasler/](https://peterheasler.github.io/peterheasler/)
 <!--
 **PeterHeasler/peterheasler** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
