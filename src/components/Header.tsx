@@ -1,12 +1,12 @@
 
 import Link from 'next/link';
 import { AiFillHome } from 'react-icons/ai';
-import { ThemeSwitcher } from './ThemeSwitcher';
+import { ThemeSwitcher } from './ui/ThemeSwitcher';
 
 export default function Header() {
   return (
     <header className="bg-white dark:bg-gray-800 shadow-md">
-      <div className="container mx-auto px-4 py-6 flex justify-between items-center">
+      <div className="container mx-auto px-2 py-4 flex justify-between items-center">
         <Link href="/" className="text-2xl font-bold text-gray-900 dark:text-white">
           <AiFillHome style={{ fontSize: '1.75em' }} aria-label="Home" />
         </Link>
