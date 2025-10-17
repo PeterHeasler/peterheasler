@@ -49,8 +49,6 @@ export default async function ContentPage({ params }: Props) {
   const contentData = await getContentData(dataType, slug);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
         <article>
           <h1 className="text-4xl font-bold">{contentData.title}</h1>
           <div className="text-gray-500">{contentData.date}</div>
@@ -58,7 +56,5 @@ export default async function ContentPage({ params }: Props) {
             <div dangerouslySetInnerHTML={{ __html: contentData.contentHtml }} />
           </ProseThemeWrapper>
         </article>
-      </div>
-    </main>
   );
 }

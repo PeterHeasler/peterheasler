@@ -19,22 +19,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-      >
-        <body className={`${inter.className}`}>
-          <div className="min-h-screen flex flex-col border-border">
+      <body className={`${inter.className}`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+        >
+          {/* Use a flex container to push the footer down */}
+          <div className="flex min-h-screen flex-col">
             <Header />
-            <main className="flex-grow p-12">
+            {/* The main content area grows to fill available space */}
+            <main className="flex-grow p-14">
               {children}
             </main>
             <Footer />
           </div>
-        </body>
-      </ThemeProvider>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
