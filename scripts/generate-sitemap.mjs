@@ -4,36 +4,45 @@ import { SitemapStream, streamToPromise } from 'sitemap';
 import { createWriteStream, writeFileSync } from 'fs';
 import { globby } from 'globby';
 
-// Your website's public URL
 const siteUrl = 'https://peterheasler.github.io/peterheasler';
 
 async function generateSitemap() {
-  // 1. Get all your page routes
   const pages = await globby([
     'src/app/**/page.tsx',
     '!src/app/[dataType]/[slug]/page.tsx',
-    '!src/app/api',           // Exclude API routes
+    '!src/app/api',
     'src/projects/*.md',
     'src/posts/*.md',
   ]);
 
-  // 2. Create a sitemap stream
   const sitemapStream = new SitemapStream({ hostname: siteUrl });
 
-  // 3. Add each page to the sitemap
   pages.forEach(page => {
-    // Convert file path to URL path
-    const path = page
-      .replace(/^(src\/app|src\/projects|src\/posts)/, '') // Remove root folder
-      .replace(/\/(page)?\.(tsx|md)$/, '') // Remove file extensions and 'page' segment
-      .replace(/\/index$/, ''); // Handle index routes
+    let path = '';
+
+    if (page.startsWith('src/projects')) {
+      // Handle project files
+      path = page
+        .replace(/^src\/projects/, '/peterheasler/projects')
+        .replace(/\.md$/, '');
+    } else if (page.startsWith('src/posts')) {
+      // Handle post files
+      path = page
+        .replace(/^src\/posts/, '/peterheasler/posts')
+        .replace(/\.md$/, '');
+    } else {
+      // Handle regular app pages
+      path = page
+        .replace('src/app', '')
+        .replace('/page.tsx', '')
+        .replace(/\/index$/, '');
+    }
 
     sitemapStream.write({ url: path, changefreq: 'daily', priority: 0.7 });
   });
 
   sitemapStream.end();
 
-  // Wait for the stream to finish and write to file
   const sitemap = await streamToPromise(sitemapStream);
   writeFileSync('public/sitemap.xml', sitemap);
 
