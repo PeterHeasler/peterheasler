@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { GoogleAnalytics } from "@/lib/gtag";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,6 +36,7 @@ export default function RootLayout({
             <Footer />
           </div>
         </ThemeProvider>
+        <GoogleAnalytics />
       </body>
     </html>
   );
