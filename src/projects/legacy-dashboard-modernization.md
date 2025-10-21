@@ -3,8 +3,6 @@ title: 'Modernization of Legacy Application Dashboard'
 date: '2023-10-26'
 ---
 
-## **Project Overview: Modernization of Legacy Application Dashboard**
-
 | STAR Component | Detail |
 | :---- | :---- |
 | **Project Title** | **Modernization of Legacy Application Dashboard** (via Micro Frontends) |
